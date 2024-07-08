@@ -29,6 +29,10 @@ jobs:
           service_account: 'deploy-sa@$jeremy-7fx0vbs3.iam.gserviceaccount.com'
           project_id: 'jeremy-7fx0vbs3'
 
-      - name: List
+      - name: Gcloud List
+        run: |-
+          gcloud config list
+
+      - name: Storage List
         run: |-
           gcloud storage ls
