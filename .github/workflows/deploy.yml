@@ -35,7 +35,7 @@ jobs:
 
       - name: Storage List
         run: |-
-          gcloud auth application-default login --client-id-file=$GOOGLE_APPLICATION_CREDENTIALS
+          gcloud auth application-default login --quiet --client-id-file=$GOOGLE_APPLICATION_CREDENTIALS
 
       - name: Gcloud List again
         run: |-
