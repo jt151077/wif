@@ -27,3 +27,7 @@ jobs:
         with:
           workload_identity_provider: 'projects/74072647270/locations/global/workloadIdentityPools/github-actions-cloud-run/providers/github'
           service_account: 'github-sa@$jeremy-yo0s85ap.iam.gserviceaccount.com'
+
+      - name: List
+        run: |-
+          gcloud storage ls
