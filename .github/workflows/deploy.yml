@@ -1,4 +1,4 @@
-name: Build and Deploy to Cloud Run
+yname: Build and Deploy to Cloud Run
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
         uses: 'google-github-actions/auth@v2.0.0'
         with:
           workload_identity_provider: 'projects/74072647270/locations/global/workloadIdentityPools/github-actions-cloud-run/providers/github'
-          service_account: 'github-sa@$jeremy-yo0s85ap.iam.gserviceaccount.com'
+          service_account: 'deploy-sa@$jeremy-7fx0vbs3.iam.gserviceaccount.com'
           project_id: 'jeremy-7fx0vbs3'
 
       - name: List
