@@ -6,7 +6,7 @@ on:
 
 env:
   APP_NAME: 'frontend'
-  PROJECT_ID: 'jeremy-7fx0vbs3'
+  PROJECT_ID: 'jeremy-r7znm7yq'
   REGION: 'europe-west1'
   REGISTRY_NAME: 'run-image'
 
@@ -19,24 +19,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Google Auth
         id: auth
         uses: 'google-github-actions/auth@v2.0.0'
         with:
-          workload_identity_provider: 'projects/74072647270/locations/global/workloadIdentityPools/github-actions-cloud-run/providers/github'
-          service_account: 'deploy-sa@$jeremy-7fx0vbs3.iam.gserviceaccount.com'
-          project_id: 'jeremy-7fx0vbs3'
+          workload_identity_provider: 'projects/50888160022/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider'
+          service_account: 'github-wif@jeremy-r7znm7yq.iam.gserviceaccount.com'
+          project_id: 'jeremy-r7znm7yq'
 
       - name: Gcloud List
         run: |-
-          gcloud config list
-
-      - name: Storage List
-        run: |-
-          gcloud auth application-default login --quiet --client-id-file=$GOOGLE_APPLICATION_CREDENTIALS
-
-      - name: Gcloud List again
-        run: |-
-          gcloud config list
+          gcloud storage ls
