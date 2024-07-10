@@ -82,41 +82,6 @@ resource "google_project_iam_member" "github-storageAdmin" {
   member  = "serviceAccount:${google_service_account.github-wif.email}"
 }
 
-/*
-
-$ terraform import google_service_account.github-wif projects/jeremy-r7znm7yq/serviceAccounts/github-wif
-$ terraform import google_iam_workload_identity_pool.github projects/jeremy-r7znm7yq/locations/global/workloadIdentityPools/github-actions-pool
-
-$ terraform import google_iam_workload_identity_pool_provider.github-provider projects/jeremy-r7znm7yq/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider
-
-
-
-#
-### Service account for deploying services
-#
-resource "google_project_iam_member" "github-serviceAccountTokenCreator" {
-  project = var.project_id
-  role    = "roles/iam.serviceAccountTokenCreator"
-  member  = "serviceAccount:${google_service_account.gihub-sa.email}"
-}
-
-resource "google_project_iam_member" "github-cloudbuildBuilder" {
-  project = var.project_id
-  role    = "roles/cloudbuild.builds.builder"
-  member  = "serviceAccount:${google_service_account.gihub-sa.email}"
-}
-
-resource "google_project_iam_member" "github_artifactregistry_writer" {
-  project = var.project_id
-  role    = "roles/artifactregistry.writer"
-  member  = "serviceAccount:${google_service_account.gihub-sa.email}"
-}
-
-resource "google_project_iam_member" "github_logs_writer" {
-  project = var.project_id
-  role    = "roles/logging.logWriter"
-  member  = "serviceAccount:${google_service_account.gihub-sa.email}"
-}
 
 
 #
@@ -161,5 +126,44 @@ resource "google_cloud_run_service_iam_binding" "fe_unauthorised_access" {
     "allUsers"
   ]
 }
+
+/*
+
+$ terraform import google_service_account.github-wif projects/jeremy-r7znm7yq/serviceAccounts/github-wif
+$ terraform import google_iam_workload_identity_pool.github projects/jeremy-r7znm7yq/locations/global/workloadIdentityPools/github-actions-pool
+
+$ terraform import google_iam_workload_identity_pool_provider.github-provider projects/jeremy-r7znm7yq/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider
+
+
+
+#
+### Service account for deploying services
+#
+resource "google_project_iam_member" "github-serviceAccountTokenCreator" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member  = "serviceAccount:${google_service_account.gihub-sa.email}"
+}
+
+resource "google_project_iam_member" "github-cloudbuildBuilder" {
+  project = var.project_id
+  role    = "roles/cloudbuild.builds.builder"
+  member  = "serviceAccount:${google_service_account.gihub-sa.email}"
+}
+
+resource "google_project_iam_member" "github_artifactregistry_writer" {
+  project = var.project_id
+  role    = "roles/artifactregistry.writer"
+  member  = "serviceAccount:${google_service_account.gihub-sa.email}"
+}
+
+resource "google_project_iam_member" "github_logs_writer" {
+  project = var.project_id
+  role    = "roles/logging.logWriter"
+  member  = "serviceAccount:${google_service_account.gihub-sa.email}"
+}
+
+
+
 
 */
