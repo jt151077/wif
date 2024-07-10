@@ -72,6 +72,16 @@ resource "google_service_account_iam_binding" "iam-workloadIdentityUser" {
   ]
 }
 
+resource "google_project_iam_member" "github-storageAdmin" {
+  depends_on = [
+    google_service_account.github-wif
+  ]
+
+  project = var.project_id
+  role    = "roles/storage.admin"
+  member  = "serviceAccount:${google_service_account.github-wif.email}"
+}
+
 /*
 
 $ terraform import google_service_account.github-wif projects/jeremy-r7znm7yq/serviceAccounts/github-wif
