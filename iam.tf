@@ -82,6 +82,16 @@ resource "google_project_iam_member" "github-storageAdmin" {
   member  = "serviceAccount:${google_service_account.github-wif.email}"
 }
 
+resource "google_project_iam_member" "github-cloudbuildEditor" {
+  depends_on = [
+    google_service_account.github-wif
+  ]
+
+  project = var.project_id
+  role    = "roles/cloudbuild.builds.editor"
+  member  = "serviceAccount:${google_service_account.github-wif.email}"
+}
+
 
 
 #
