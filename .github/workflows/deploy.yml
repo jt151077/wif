@@ -31,4 +31,4 @@ jobs:
 
       - name: Build and push the Docker image
         run: |-
-          gcloud builds submit ./app --tag $REGION-docker.pkg.dev/jeremy-r7znm7yq/$REGISTRY_NAME/$APP_NAME:$GITHUB_SHA
+          gcloud builds submit ./app --tag $REGION-docker.pkg.dev/jeremy-r7znm7yq/$REGISTRY_NAME/$APP_NAME:$GITHUB_SHA --service-account=cloudbuild-sa@jeremy-r7znm7yq.iam.gserviceaccount.com	

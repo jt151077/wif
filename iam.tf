@@ -147,6 +147,28 @@ resource "google_cloud_run_service_iam_binding" "fe_unauthorised_access" {
   ]
 }
 
+
+
+
+
+#
+### Service account for the Cloud Build service
+#
+resource "google_service_account" "cloudbuild_sa" {
+  depends_on = [
+    google_project_service.gcp_services
+  ]
+
+  project    = var.project_id
+  account_id = "cloudbuild-sa"
+}
+
+resource "google_project_iam_member" "cloudbuild_sa_builder" {
+  project = var.project_id
+  role    = "roles/cloudbuild.builds.builder"
+  member  = "serviceAccount:${google_service_account.cloudbuild_sa.email}"
+}
+
 /*
 
 $ terraform import google_service_account.github-wif projects/jeremy-r7znm7yq/serviceAccounts/github-wif
