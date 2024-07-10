@@ -41,4 +41,4 @@ jobs:
           gcloud run deploy $APP_NAME \
           --region $REGION \
           --image $REGION-docker.pkg.dev/$PROJECT_ID/$REGISTRY_NAME/$APP_NAME:$GITHUB_SHA \
-          --service-account=projects/jeremy-r7znm7yq/serviceAccounts/frontend-cloudrun-sa@jeremy-r7znm7yq.iam.gserviceaccount.com
+          --service-account=frontend-cloudrun-sa@jeremy-r7znm7yq.iam.gserviceaccount.com
