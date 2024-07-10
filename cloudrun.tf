@@ -22,7 +22,7 @@
 #
 ### Cloud Run service for the frontend application
 #
-resource "google_cloud_run_service" "frontend_run" {
+resource "google_cloud_run_service" "run" {
   depends_on = [
     google_project_service.gcp_services
   ]
@@ -34,7 +34,7 @@ resource "google_cloud_run_service" "frontend_run" {
 
   template {
     spec {
-      service_account_name = google_service_account.frontend_cloudrun_sa.email
+      service_account_name = google_service_account.cloudrun_sa.email
       containers {
         image = "nginx:latest"
 

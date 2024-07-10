@@ -40,7 +40,7 @@ resource "google_iam_workload_identity_pool_provider" "github-provider" {
     "google.subject"       = "assertion.sub"
     "attribute.repository" = "assertion.repository"
     "attribute.actor"      = "assertion.actor"
-    "attribute.aud"       = "assertion.aud"
+    "attribute.aud"        = "assertion.aud"
   }
 
   oidc {
@@ -92,16 +92,6 @@ resource "google_project_iam_member" "github-cloudbuildEditor" {
   member  = "serviceAccount:${google_service_account.github-wif.email}"
 }
 
-resource "google_project_iam_member" "github-serviceAccountUser" {
-  depends_on = [
-    google_service_account.github-wif
-  ]
-
-  project = var.project_id
-  role    = "roles/iam.serviceAccountUser"
-  member  = "serviceAccount:${google_service_account.github-wif.email}"
-}
-
 resource "google_project_iam_member" "github-runDeveloper" {
   depends_on = [
     google_service_account.github-wif
@@ -114,47 +104,54 @@ resource "google_project_iam_member" "github-runDeveloper" {
 
 
 #
-### Service account for the frontend Cloud Run service
+### Service account for the Cloud Run service
 #
-resource "google_service_account" "frontend_cloudrun_sa" {
+resource "google_service_account" "cloudrun_sa" {
   depends_on = [
     google_project_service.gcp_services
   ]
 
   project    = var.project_id
-  account_id = "frontend-cloudrun-sa"
+  account_id = "cloudrun-sa"
 }
 
 #
 ### Frontend service account access to artifact registry to deploy the container
 #
-resource "google_project_iam_member" "fe_run_artifactregistry_reader" {
+resource "google_project_iam_member" "run_artifactregistry_reader" {
   project = var.project_id
   role    = "roles/artifactregistry.reader"
-  member  = "serviceAccount:${google_service_account.frontend_cloudrun_sa.email}"
+  member  = "serviceAccount:${google_service_account.cloudrun_sa.email}"
 }
 
 #
 ### Frontend service account access to write logs
 #
-resource "google_project_iam_member" "fe_run_logs_writer" {
+resource "google_project_iam_member" "run_logs_writer" {
   project = var.project_id
   role    = "roles/logging.logWriter"
-  member  = "serviceAccount:${google_service_account.frontend_cloudrun_sa.email}"
+  member  = "serviceAccount:${google_service_account.cloudrun_sa.email}"
 }
 
 #
 ### Allow unauthorised access to frontend cloud run service (still must be accessed internal or via the Global Load Balancer)
 #
-resource "google_cloud_run_service_iam_binding" "fe_unauthorised_access" {
+resource "google_cloud_run_service_iam_binding" "unauthorised_access" {
   location = var.project_default_region
   project  = var.project_id
-  service  = google_cloud_run_service.frontend_run.name
+  service  = google_cloud_run_service.run.name
   role     = "roles/run.invoker"
   members = [
     "allUsers"
   ]
 }
+
+resource "google_service_account_iam_member" "github-CR-serviceAccountUser" {
+  service_account_id = google_service_account.cloudrun_sa.name
+  role               = "roles/iam.serviceAccountUser"
+  member             = "serviceAccount:${google_service_account.github-wif.email}"
+}
+
 
 
 
@@ -176,4 +173,10 @@ resource "google_project_iam_member" "cloudbuild_sa_builder" {
   project = var.project_id
   role    = "roles/cloudbuild.builds.builder"
   member  = "serviceAccount:${google_service_account.cloudbuild_sa.email}"
+}
+
+resource "google_service_account_iam_member" "github-CB-serviceAccountUser" {
+  service_account_id = google_service_account.cloudbuild_sa.name
+  role               = "roles/iam.serviceAccountUser"
+  member             = "serviceAccount:${google_service_account.github-wif.email}"
 }
