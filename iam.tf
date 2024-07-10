@@ -102,6 +102,15 @@ resource "google_project_iam_member" "github-serviceAccountUser" {
   member  = "serviceAccount:${google_service_account.github-wif.email}"
 }
 
+resource "google_project_iam_member" "github-runDeveloper" {
+  depends_on = [
+    google_service_account.github-wif
+  ]
+
+  project = var.project_id
+  role    = "roles/run.developer"
+  member  = "serviceAccount:${google_service_account.github-wif.email}"
+}
 
 
 #
