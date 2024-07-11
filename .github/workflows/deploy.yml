@@ -7,11 +7,9 @@ on:
 env:
   APP_NAME: 'frontend'
   PROJECT_ID: 'jeremy-r7znm7yq'
-  PROJECT_NMR: '50888160022'
   REGION: 'europe-west1'
   REGISTRY_NAME: 'run-image'
-  WORKLOAD_IDENTITY_POOL: 'github-actions'
-  WORKLOAD_IDENTITY_POOL_PROVIDER: 'github-provider'
+  WORKLOAD_IDENTITY_POOL: 'run-image'
 
 jobs:
   deploy:
@@ -26,17 +24,17 @@ jobs:
 
       - name: Google Auth
         id: auth
-        uses: google-github-actions/auth@v2.0.0
+        uses: 'google-github-actions/auth@v2.0.0'
         with:
-          workload_identity_provider: 'projects/$PROJECT_NMR/locations/global/workloadIdentityPools/$WORKLOAD_IDENTITY_POOL/providers/$WORKLOAD_IDENTITY_POOL_PROVIDER'
-          service_account: 'github-wif@$PROJECT_ID.iam.gserviceaccount.com'
-          project_id: $PROJECT_ID
+          workload_identity_provider: 'projects/50888160022/locations/global/workloadIdentityPools/github-actions/providers/github-provider'
+          service_account: 'github-wif@jeremy-r7znm7yq.iam.gserviceaccount.com'
+          project_id: 'jeremy-r7znm7yq'
 
       - name: Build and push the Docker image
         run: |-
           gcloud builds submit ./app \
-          --tag $REGION-docker.pkg.dev/$PROJECT_ID/$REGISTRY_NAME/$APP_NAME:$GITHUB_SHA \
-          --service-account=projects/$PROJECT_ID/serviceAccounts/cloudbuild-sa@$PROJECT_ID.iam.gserviceaccount.com \
+          --tag $REGION-docker.pkg.dev/jeremy-r7znm7yq/$REGISTRY_NAME/$APP_NAME:$GITHUB_SHA \
+          --service-account=projects/jeremy-r7znm7yq/serviceAccounts/cloudbuild-sa@jeremy-r7znm7yq.iam.gserviceaccount.com \
           --default-buckets-behavior=REGIONAL_USER_OWNED_BUCKET
 
       - name: Deploy
@@ -44,4 +42,4 @@ jobs:
           gcloud run deploy $APP_NAME \
           --region $REGION \
           --image $REGION-docker.pkg.dev/$PROJECT_ID/$REGISTRY_NAME/$APP_NAME:$GITHUB_SHA \
-          --service-account=cloudrun-sa@$PROJECT_ID.iam.gserviceaccount.com
+          --service-account=cloudrun-sa@jeremy-r7znm7yq.iam.gserviceaccount.com
