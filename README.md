@@ -50,4 +50,13 @@ env:
   REGISTRY_NAME: 'run-image'
 ```
 
-3. Once the Workload Identity Pool is created, and aditional GCP resources, update the `.github/workflows/deploy.yml` with:
+3. You can now commit your changes to the repository, which will in turn trigger the github action. If everything worked as expected, you should see a green deploy action:
+
+```shell
+git add .
+git commit -m '<YOUR_COMMIT_MESSAGE>'
+git push
+```
+
+
+![](img/1.png)
