@@ -26,7 +26,7 @@ jobs:
         id: auth
         uses: 'google-github-actions/auth@v2.0.0'
         with:
-          workload_identity_provider: $WORKLOAD_IDENTITY_POOL
+          workload_identity_provider: ${{env.WORKLOAD_IDENTITY_POOL}}
           service_account: 'github-wif@jeremy-r7znm7yq.iam.gserviceaccount.com'
           project_id: 'jeremy-r7znm7yq'
 
