@@ -27,8 +27,8 @@ jobs:
         uses: 'google-github-actions/auth@v2.0.0'
         with:
           workload_identity_provider: ${{env.WORKLOAD_IDENTITY_POOL}}
-          service_account: 'github-wif@jeremy-r7znm7yq.iam.gserviceaccount.com'
-          project_id: 'jeremy-r7znm7yq'
+          service_account: 'github-wif@${{env.PROJECT_ID}}.iam.gserviceaccount.com'
+          project_id: ${{env.PROJECT_ID}}
 
       - name: Build and push the Docker image
         run: |-
