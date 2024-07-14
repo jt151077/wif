@@ -7,9 +7,9 @@ on:
 env:
   APP_NAME: 'frontend'
   PROJECT_ID: 'jeremy-r7znm7yq'
+  PROJECT_NMR: 50888160022
   REGION: 'europe-west1'
   REGISTRY_NAME: 'run-image'
-  WORKLOAD_IDENTITY_POOL: 'projects/50888160022/locations/global/workloadIdentityPools/github-actions/providers/github-provider'
 
 jobs:
   deploy:
@@ -26,7 +26,7 @@ jobs:
         id: auth
         uses: 'google-github-actions/auth@v2.0.0'
         with:
-          workload_identity_provider: ${{env.WORKLOAD_IDENTITY_POOL}}
+          workload_identity_provider: 'projects/${{env.PROJECT_NMR}}/locations/global/workloadIdentityPools/github-actions/providers/github-provider'
           service_account: 'github-wif@${{env.PROJECT_ID}}.iam.gserviceaccount.com'
           project_id: ${{env.PROJECT_ID}}
 
