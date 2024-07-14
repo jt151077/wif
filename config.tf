@@ -19,6 +19,7 @@ locals {
   project_id             = var.project_id
   project_number         = var.project_nmr
   project_default_region = var.project_default_region
+  github_repo            = var.github_repo
   gcp_service_list = [
     "artifactregistry.googleapis.com",
     "cloudbuild.googleapis.com",

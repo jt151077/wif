@@ -9,3 +9,7 @@ variable "project_nmr" {
 variable "project_default_region" {
   type = string
 }
+
+variable "github_repo" {
+  type = string
+}

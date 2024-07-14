@@ -39,9 +39,15 @@ $ terraform apply
 
 > Note: You may have to run `terraform plan` and `terraform apply` twice if you get errors for serviceaccounts not found
 
-2. Once the Workload Identity Pool is created, and aditional GCP resources, update the `.github/workflows/deploy.yml` with the output values from Terraform:
+2. Once the Workload Identity Pool is created, and aditional GCP resources, update the `.github/workflows/deploy.yml` with:
 
-* workload_identity_pool_provider_id
-* workload_identity_pool_sa
+```shell
+env:
+  APP_NAME: 'frontend'
+  PROJECT_ID: '<YOUR_PROJECT_ID>'
+  PROJECT_NMR: <YOUR_PROJECT_NMR>
+  REGION: 'europe-west1'
+  REGISTRY_NAME: 'run-image'
+```
 
-
+3. Once the Workload Identity Pool is created, and aditional GCP resources, update the `.github/workflows/deploy.yml` with:

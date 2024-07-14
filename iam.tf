@@ -35,7 +35,7 @@ resource "google_iam_workload_identity_pool_provider" "github-provider" {
   workload_identity_pool_provider_id = "github-provider"
   display_name                       = "github-provider"
   description                        = "OIDC identity pool provider for automated test"
-  attribute_condition                = "assertion.repository=='jt151077/wif'"
+  attribute_condition                = "assertion.repository=='${local.github_repo}'"
   attribute_mapping = {
     "google.subject"       = "assertion.sub"
     "attribute.repository" = "assertion.repository"
@@ -71,7 +71,7 @@ resource "google_service_account_iam_binding" "iam-workloadIdentityUser" {
   role               = "roles/iam.workloadIdentityUser"
 
   members = [
-    "principalSet://iam.googleapis.com/projects/50888160022/locations/global/workloadIdentityPools/github-actions/attribute.repository/jt151077/wif"
+    "principalSet://iam.googleapis.com/projects/${local.project_number}/locations/global/workloadIdentityPools/github-actions/attribute.repository/${local.github_repo}"
   ]
 
   depends_on = [
