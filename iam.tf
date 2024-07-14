@@ -48,6 +48,10 @@ resource "google_iam_workload_identity_pool_provider" "github-provider" {
   }
 }
 
+output "workload_identity_pool_provider_id" {
+  value = google_iam_workload_identity_pool_provider.github-provider.name
+}
+
 
 resource "google_service_account" "github-wif" {
   depends_on = [
@@ -56,6 +60,10 @@ resource "google_service_account" "github-wif" {
 
   project    = var.project_id
   account_id = "github-wif"
+}
+
+output "workload_identity_pool_sa" {
+  value = google_service_account.github-wif.email
 }
 
 resource "google_service_account_iam_binding" "iam-workloadIdentityUser" {

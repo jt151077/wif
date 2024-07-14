@@ -39,5 +39,9 @@ $ terraform apply
 
 > Note: You may have to run `terraform plan` and `terraform apply` twice if you get errors for serviceaccounts not found
 
-2. Build and deploy the webserver image in GKE, by issuing the following command at the root of the project:
+2. Once the Workload Identity Pool is created, and aditional GCP resources, update the `.github/workflows/deploy.yml` with the output values from Terraform:
+
+* workload_identity_pool_provider_id
+* workload_identity_pool_sa
+
 
